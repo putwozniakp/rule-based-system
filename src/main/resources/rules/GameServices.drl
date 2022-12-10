@@ -1,0 +1,96 @@
+package com.sample
+
+import com.sample.RuleSystem;
+
+
+declare enum State
+	UNKNOWN, TRUE, FALSE;
+end
+
+declare Money
+	love : State @key
+end
+
+declare ProductiveWork
+	love : State @key
+end
+
+rule "Init"
+
+    when
+    then
+    	insert(new Money(State.UNKNOWN));
+    	insert(new ProductiveWork(State.UNKNOWN));
+
+end
+
+rule "Loves money"
+	
+	when
+		$m: Money(love == State.UNKNOWN)
+	
+	then
+		RuleSystem.INSTANCE.setQuestion("Do you love money?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", () -> { 
+        	$m.setLove(State.TRUE);
+        	update($m);
+        });
+		RuleSystem.INSTANCE.addOption("No", () -> {
+			$m.setLove(State.FALSE);
+			update($m);
+		});
+		
+end
+
+rule "Loves productive work"
+	
+	when
+		Money(love == State.TRUE)
+		and $p : ProductiveWork(love == State.UNKNOWN)
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("Do you like doing productive work?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", () -> {
+        	$p.setLove(State.TRUE);
+        	update($p);
+        });
+		RuleSystem.INSTANCE.addOption("No", () -> {
+			$p.setLove(State.FALSE);
+        	update($p);
+		});
+		
+end
+
+rule "RESULT: Game critic"
+
+	when
+		Money(love == State.FALSE)
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Game Critic");
+
+end
+
+rule "RESULT: Programmer"
+
+	when
+		ProductiveWork(love == State.TRUE)
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Programmer");
+
+end
+
+rule "RESULT: Consultant"
+
+	when
+		ProductiveWork(love == State.FALSE)
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Consultant");
+
+end
+
+
