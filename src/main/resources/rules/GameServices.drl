@@ -10,7 +10,7 @@ declare Fact
 	state : String @key
 end
 
-rule "Init"
+rule "INIT"
 
     when
     then
@@ -41,11 +41,31 @@ end
 rule "Loves productive work"
 	
 	when
-		Fact(target == "Loves money", state == "Yes")
-		and $p : Fact(target == "Loves productive work", state == "Unknown")
+		$p : Fact(target == "Loves productive work", state == "Unknown")
 		
 	then
 		RuleSystem.INSTANCE.setQuestion("Do you like doing productive work?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	$p.setState("Yes");
+        	ksess.insert(new Fact("Can code", "Unknown"));
+        	update($p);
+        });
+		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+			$p.setState("No");
+			ksess.insert(new Fact("Afraid of responsibility", "Unknown"));
+        	update($p);
+		});
+		
+end
+
+rule "Afraid of responsibility"
+	
+	when
+		$p : Fact(target == "Afraid of responsibility", state == "Unknown")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("Are you afraid of responsibility?");
         
         RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
         	$p.setState("Yes");
@@ -53,6 +73,29 @@ rule "Loves productive work"
         });
 		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
 			$p.setState("No");
+        	update($p);
+		});
+		
+end
+
+rule "Can code"
+	
+	when
+		$p : Fact(target == "Can code", state == "Unknown")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("Can you code?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	$p.setState("Yes");
+        	update($p);
+        });
+		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+			$p.setState("No");
+        	update($p);
+		});
+		RuleSystem.INSTANCE.addOption("Well... it's been a while", (KieSession ksess) -> {
+			$p.setState("Been a while");
         	update($p);
 		});
 		
@@ -68,23 +111,53 @@ rule "RESULT: Game critic"
 
 end
 
+rule "RESULT: Consultant"
+
+	when
+		Fact(target == "Afraid of responsibility", state == "Yes")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Consultant");
+
+end
+
+rule "RESULT: Creative Director"
+
+	when
+		Fact(target == "Afraid of responsibility", state == "No")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Creative Director");
+
+end
+
 rule "RESULT: Programmer"
 
 	when
-		Fact(target == "Loves productive work", state == "Yes")
+		Fact(target == "Can code", state == "Yes")
 		
 	then
 		RuleSystem.INSTANCE.setQuestion("RESULT: Programmer");
 
 end
 
-rule "RESULT: Consultant"
+rule "RESULT: Technical Lead"
 
 	when
-		Fact(target == "Loves productive work", state == "No")
+		Fact(target == "Can code", state == "Been a while")
 		
 	then
-		RuleSystem.INSTANCE.setQuestion("RESULT: Consultant");
+		RuleSystem.INSTANCE.setQuestion("RESULT: Technical Lead");
+
+end
+
+rule "RESULT: Shit out of luck"
+
+	when
+		Fact(target == "Can code", state == "No")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: You're shit out of luck");
 
 end
 
