@@ -28,7 +28,7 @@ public class RuleSystem {
 	
 	@FunctionalInterface
 	public interface OptionCallback {
-		void callback();
+		void callback(KieSession session);
 	}
 	
 	private class Option {
@@ -150,7 +150,7 @@ public class RuleSystem {
 			
 			System.out.println("-> " + opt.button.getText());
 			
-			opt.onSelected.callback();
+			opt.onSelected.callback(ksess);
 			
 			ksess.fireAllRules();
         }

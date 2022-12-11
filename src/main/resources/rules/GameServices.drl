@@ -2,6 +2,7 @@ package com.sample
 
 import com.sample.RuleSystem;
 
+import org.kie.api.runtime.KieSession;
 
 declare enum State
 	UNKNOWN, TRUE, FALSE;
@@ -15,12 +16,16 @@ declare ProductiveWork
 	love : State @key
 end
 
+declare Fact
+	target : String
+	state : String
+end
+
 rule "Init"
 
     when
     then
     	insert(new Money(State.UNKNOWN));
-    	insert(new ProductiveWork(State.UNKNOWN));
 
 end
 
@@ -32,11 +37,12 @@ rule "Loves money"
 	then
 		RuleSystem.INSTANCE.setQuestion("Do you love money?");
         
-        RuleSystem.INSTANCE.addOption("Yes", () -> { 
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> { 
         	$m.setLove(State.TRUE);
+        	ksess.insert(new ProductiveWork(State.UNKNOWN));
         	update($m);
         });
-		RuleSystem.INSTANCE.addOption("No", () -> {
+		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
 			$m.setLove(State.FALSE);
 			update($m);
 		});
@@ -52,11 +58,11 @@ rule "Loves productive work"
 	then
 		RuleSystem.INSTANCE.setQuestion("Do you like doing productive work?");
         
-        RuleSystem.INSTANCE.addOption("Yes", () -> {
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
         	$p.setLove(State.TRUE);
         	update($p);
         });
-		RuleSystem.INSTANCE.addOption("No", () -> {
+		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
 			$p.setLove(State.FALSE);
         	update($p);
 		});
