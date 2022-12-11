@@ -4,46 +4,35 @@ import com.sample.RuleSystem;
 
 import org.kie.api.runtime.KieSession;
 
-declare enum State
-	UNKNOWN, TRUE, FALSE;
-end
-
-declare Money
-	love : State @key
-end
-
-declare ProductiveWork
-	love : State @key
-end
 
 declare Fact
-	target : String
-	state : String
+	target : String @key
+	state : String @key
 end
 
 rule "Init"
 
     when
     then
-    	insert(new Money(State.UNKNOWN));
+    	insert(new Fact("Loves money", "Unknown"));
 
 end
 
 rule "Loves money"
 	
 	when
-		$m: Money(love == State.UNKNOWN)
+		$m: Fact(target == "Loves money", state == "Unknown")
 	
 	then
 		RuleSystem.INSTANCE.setQuestion("Do you love money?");
         
         RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> { 
-        	$m.setLove(State.TRUE);
-        	ksess.insert(new ProductiveWork(State.UNKNOWN));
+        	$m.setState("Yes");
+        	ksess.insert(new Fact("Loves productive work", "Unknown"));
         	update($m);
         });
 		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
-			$m.setLove(State.FALSE);
+			$m.setState("No");
 			update($m);
 		});
 		
@@ -52,18 +41,18 @@ end
 rule "Loves productive work"
 	
 	when
-		Money(love == State.TRUE)
-		and $p : ProductiveWork(love == State.UNKNOWN)
+		Fact(target == "Loves money", state == "Yes")
+		and $p : Fact(target == "Loves productive work", state == "Unknown")
 		
 	then
 		RuleSystem.INSTANCE.setQuestion("Do you like doing productive work?");
         
         RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
-        	$p.setLove(State.TRUE);
+        	$p.setState("Yes");
         	update($p);
         });
 		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
-			$p.setLove(State.FALSE);
+			$p.setState("No");
         	update($p);
 		});
 		
@@ -72,7 +61,7 @@ end
 rule "RESULT: Game critic"
 
 	when
-		Money(love == State.FALSE)
+		Fact(target == "Loves money", state == "No")
 		
 	then
 		RuleSystem.INSTANCE.setQuestion("RESULT: Game Critic");
@@ -82,7 +71,7 @@ end
 rule "RESULT: Programmer"
 
 	when
-		ProductiveWork(love == State.TRUE)
+		Fact(target == "Loves productive work", state == "Yes")
 		
 	then
 		RuleSystem.INSTANCE.setQuestion("RESULT: Programmer");
@@ -92,7 +81,7 @@ end
 rule "RESULT: Consultant"
 
 	when
-		ProductiveWork(love == State.FALSE)
+		Fact(target == "Loves productive work", state == "No")
 		
 	then
 		RuleSystem.INSTANCE.setQuestion("RESULT: Consultant");
