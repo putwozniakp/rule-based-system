@@ -1,0 +1,149 @@
+package com.sample
+
+import com.sample.RuleSystem;
+
+import org.kie.api.runtime.KieSession;
+
+
+declare Fact
+	target : String @key
+	state : String @key
+end
+
+
+
+rule "Loves money"
+	
+	when
+		not Fact(target == "Loves money")
+	
+	then
+		RuleSystem.INSTANCE.setQuestion("Do you love money?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> { 
+        	ksess.insert(new Fact("Loves money", "Yes"));
+        });
+		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+			ksess.insert(new Fact("Loves money", "No"));
+		});
+		
+end
+
+rule "Loves productive work"
+	
+	when
+		Fact(target == "Loves money", state == "Yes")
+		and not Fact(target == "Loves productive work")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("Do you like doing productive work?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Loves productive work", "Yes"));
+        });
+		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Loves productive work", "No"));
+		});
+		
+end
+
+rule "Afraid of responsibility"
+	
+	when
+		Fact(target == "Loves productive work", state == "No")
+		and not Fact(target == "Afraid of responsibility")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("Are you afraid of responsibility?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Afraid of responsibility", "Yes"));
+        });
+		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Afraid of responsibility", "No"));
+		});
+		
+end
+
+rule "Can code"
+	
+	when
+		Fact(target == "Loves productive work", state == "Yes")
+		and not Fact(target == "Can code", state == "Unknown")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("Can you code?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Can code", "Yes"));
+        });
+		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Can code", "No"));
+		});
+		RuleSystem.INSTANCE.addOption("Well... it's been a while", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Can code", "Been a while"));
+		});
+		
+end
+
+rule "RESULT: Game critic"
+
+	when
+		Fact(target == "Loves money", state == "No")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Game Critic");
+
+end
+
+rule "RESULT: Consultant"
+
+	when
+		Fact(target == "Afraid of responsibility", state == "Yes")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Consultant");
+
+end
+
+rule "RESULT: Creative Director"
+
+	when
+		Fact(target == "Afraid of responsibility", state == "No")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Creative Director");
+
+end
+
+rule "RESULT: Programmer"
+
+	when
+		Fact(target == "Can code", state == "Yes")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Programmer");
+
+end
+
+rule "RESULT: Technical Lead"
+
+	when
+		Fact(target == "Can code", state == "Been a while")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Technical Lead");
+
+end
+
+rule "RESULT: Shit out of luck"
+
+	when
+		Fact(target == "Can code", state == "No")
+		
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: You're shit out of luck");
+
+end
+
+
