@@ -10,30 +10,21 @@ declare Fact
 	state : String @key
 end
 
-rule "INIT"
 
-    when
-    then
-    	insert(new Fact("Loves money", "Unknown"));
-
-end
 
 rule "Loves money"
 	
 	when
-		$m: Fact(target == "Loves money", state == "Unknown")
+		not Fact(target == "Loves money")
 	
 	then
 		RuleSystem.INSTANCE.setQuestion("Do you love money?");
         
         RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> { 
-        	$m.setState("Yes");
-        	ksess.insert(new Fact("Loves productive work", "Unknown"));
-        	update($m);
+        	ksess.insert(new Fact("Loves money", "Yes"));
         });
 		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
-			$m.setState("No");
-			update($m);
+			ksess.insert(new Fact("Loves money", "No"));
 		});
 		
 end
@@ -41,20 +32,17 @@ end
 rule "Loves productive work"
 	
 	when
-		$p : Fact(target == "Loves productive work", state == "Unknown")
+		Fact(target == "Loves money", state == "Yes")
+		and not Fact(target == "Loves productive work")
 		
 	then
 		RuleSystem.INSTANCE.setQuestion("Do you like doing productive work?");
         
         RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
-        	$p.setState("Yes");
-        	ksess.insert(new Fact("Can code", "Unknown"));
-        	update($p);
+        	ksess.insert(new Fact("Loves productive work", "Yes"));
         });
 		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
-			$p.setState("No");
-			ksess.insert(new Fact("Afraid of responsibility", "Unknown"));
-        	update($p);
+        	ksess.insert(new Fact("Loves productive work", "No"));
 		});
 		
 end
@@ -62,18 +50,17 @@ end
 rule "Afraid of responsibility"
 	
 	when
-		$p : Fact(target == "Afraid of responsibility", state == "Unknown")
+		Fact(target == "Loves productive work", state == "No")
+		and not Fact(target == "Afraid of responsibility")
 		
 	then
 		RuleSystem.INSTANCE.setQuestion("Are you afraid of responsibility?");
         
         RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
-        	$p.setState("Yes");
-        	update($p);
+        	ksess.insert(new Fact("Afraid of responsibility", "Yes"));
         });
 		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
-			$p.setState("No");
-        	update($p);
+        	ksess.insert(new Fact("Afraid of responsibility", "No"));
 		});
 		
 end
@@ -81,22 +68,20 @@ end
 rule "Can code"
 	
 	when
-		$p : Fact(target == "Can code", state == "Unknown")
+		Fact(target == "Loves productive work", state == "Yes")
+		and not Fact(target == "Can code", state == "Unknown")
 		
 	then
 		RuleSystem.INSTANCE.setQuestion("Can you code?");
         
         RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
-        	$p.setState("Yes");
-        	update($p);
+        	ksess.insert(new Fact("Can code", "Yes"));
         });
 		RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
-			$p.setState("No");
-        	update($p);
+        	ksess.insert(new Fact("Can code", "No"));
 		});
 		RuleSystem.INSTANCE.addOption("Well... it's been a while", (KieSession ksess) -> {
-			$p.setState("Been a while");
-        	update($p);
+        	ksess.insert(new Fact("Can code", "Been a while"));
 		});
 		
 end
