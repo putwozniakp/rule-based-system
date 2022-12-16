@@ -10,8 +10,6 @@ declare Fact
 	state : String @key
 end
 
-
-
 rule "Loves money"
 	
 	when
@@ -28,6 +26,1098 @@ rule "Loves money"
 		});
 		
 end
+
+
+rule "Has exceptional talent"
+    when 
+        Fact(target == "Loves money", state == "No")
+        not Fact(target == "Has exceptional talent")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you have exceptional talent?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Has exceptional talent", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Has exceptional talent", "No"));
+        });
+
+end
+
+
+rule "Bitter for not having talent"
+    when 
+        Fact(target == "Has exceptional talent", state == "No")
+        not Fact(target == "Bitter for not having talent")
+    then
+        RuleSystem.INSTANCE.setQuestion("Are you bitter about it?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Bitter for not having talent", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Bitter for not having talent", "No"));
+        });
+
+end
+
+
+rule "RESULT: Game Critic"
+	when
+		Fact(target == "Bitter for not having talent", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Game Critic");
+end
+
+
+rule "RESULT: Game Reviewer"
+	when
+		Fact(target == "Bitter for not having talent", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Game Reviewer");
+end
+
+
+rule "Gets excited for other people ideas"
+    when 
+        Fact(target == "Has exceptional talent", state == "Yes")
+        not Fact(target == "Gets excited for other people ideas")
+    then
+        RuleSystem.INSTANCE.setQuestion("Can you get excited for other peoples' ideas?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Gets excited for other people ideas", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Gets excited for other people ideas", "No"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("Nah, but i can fake it", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Gets excited for other people ideas", "Nah, but i can fake it"));
+        });
+
+end
+
+
+rule "RESULT: Marketer"
+	when
+		Fact(target == "Gets excited for other people ideas", state == "Nah, but i can fake it")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Marketer");
+end
+
+
+rule "Really gets excited for other people ideas"
+    when 
+        Fact(target == "Gets excited for other people ideas", state == "Yes")
+        not Fact(target == "Really gets excited for other people ideas")
+    then
+        RuleSystem.INSTANCE.setQuestion("Really?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Really gets excited for other people ideas", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Really gets excited for other people ideas", "No"));
+        });
+
+end
+
+
+rule "Thinks games are important"
+    when 
+        Fact(target == "Gets excited for other people ideas", state == "No")
+		or Fact(target == "Really gets excited for other people ideas", state == "No")
+        not Fact(target == "Thinks games are important")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you think games are important?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Thinks games are important", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Thinks games are important", "No"));
+        });
+
+end
+
+
+rule "RESULT: Social Games Studio Employee"
+	when
+		Fact(target == "Thinks games are important", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Social Games Studio Employee");
+end
+
+
+rule "Can make games on its own"
+    when 
+        Fact(target == "Thinks games are important", state == "Yes")
+        not Fact(target == "Can make games on its own")
+    then
+        RuleSystem.INSTANCE.setQuestion("Can you make games on your own?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Can make games on its own", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Can make games on its own", "No"));
+        });
+
+end
+
+
+rule "RESULT: Indie Developer"
+	when
+		Fact(target == "Can make games on its own", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Indie Developer");
+end
+
+
+rule "Knows basic grammar"
+    when 
+        Fact(target == "Can make games on its own", state == "No")
+        not Fact(target == "Knows basic grammar")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you know basic grammar?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Knows basic grammar", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Knows basic grammar", "No"));
+        });
+
+end
+
+
+rule "RESULT: Blogger"
+	when
+		Fact(target == "Knows basic grammar", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Blogger");
+end
+
+
+rule "At least good at playing games"
+    when 
+        Fact(target == "Knows basic grammar", state == "No")
+        not Fact(target == "At least good at playing games")
+    then
+        RuleSystem.INSTANCE.setQuestion("Are you at least good at playing games?");
+        
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("At least good at playing games", "No"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("At least good at playing games", "Yes"));
+        });
+
+end
+
+rule "Is from Asia"
+    when 
+        Fact(target == "At least good at playing games", state == "Yes")
+        not Fact(target == "Is from Asia")
+    then
+        RuleSystem.INSTANCE.setQuestion("Are you from Asia?");
+        
+        RuleSystem.INSTANCE.addOption("Yes, China", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is from Asia", "Yes, China"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("Yes, Korea", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is from Asia", "Yes, Korea"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is from Asia", "No"));
+        });
+
+end
+
+
+rule "RESULT: Gold Farmer"
+	when
+		Fact(target == "Is from Asia", state == "Yes, China")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Gold Farmer");
+end
+
+
+rule "RESULT: Starcraft Cyberathlete"
+	when
+		Fact(target == "Is from Asia", state == "Yes, Korea")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Starcraft Cyberathlete");
+end
+
+
+rule "RESULT: Gamer"
+	when
+		Fact(target == "Is from Asia", state == "No")
+		or Fact(target == "At least good at playing games", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Gamer");
+end
+
+
+rule "Minds being underappreciated"
+    when 
+        Fact(target == "Really gets excited for other people ideas", state == "Yes")
+        not Fact(target == "Minds being underappreciated")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you mind being underappreciated?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Minds being underappreciated", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Minds being underappreciated", "No"));
+        });
+
+end
+
+
+rule "Is visually oriented"
+    when 
+        Fact(target == "Minds being underappreciated", state == "Yes")
+        not Fact(target == "Is visually oriented")
+    then
+        RuleSystem.INSTANCE.setQuestion("Are you visually oriented?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is visually oriented", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is visually oriented", "No"));
+        });
+
+end
+
+
+rule "Prefers working over talking"
+    when 
+        Fact(target == "Is visually oriented", state == "Yes")
+        not Fact(target == "Prefers working over talking")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you prefer working over talking?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Prefers working over talking", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Prefers working over talking", "No"));
+        });
+
+end
+
+
+rule "RESULT: Art Director"
+	when
+		Fact(target == "Prefers working over talking", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Art Director");
+end
+
+
+rule "Prefers to be a proper artist"
+    when 
+        Fact(target == "Prefers working over talking", state == "Yes")
+        not Fact(target == "Prefers to be a proper artist")
+    then
+        RuleSystem.INSTANCE.setQuestion("Would you rather be a 'proper' artist?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Prefers to be a proper artist", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Prefers to be a proper artist", "No"));
+        });
+
+end
+
+
+rule "Is French"
+    when 
+        Fact(target == "Prefers to be a proper artist", state == "Yes")
+        not Fact(target == "Is French")
+    then
+        RuleSystem.INSTANCE.setQuestion("Are you French?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is French", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is French", "No"));
+        });
+
+end
+
+
+rule "RESULT: Comic Artist"
+	when
+		Fact(target == "Is French", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Comic Artist");
+end
+
+
+rule "Is Asian"
+    when 
+        Fact(target == "Is French", state == "No")
+        not Fact(target == "Is Asian")
+    then
+        RuleSystem.INSTANCE.setQuestion("Asian?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is Asian", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is Asian", "No"));
+        });
+
+end
+
+
+rule "RESULT: Concept Artist"
+	when
+		Fact(target == "Is Asian", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Concept Artist");
+end
+
+
+rule "Enjoys crafting crates"
+    when 
+        Fact(target == "Is Asian", state == "No")
+        not Fact(target == "Enjoys crafting crates")
+    then
+        RuleSystem.INSTANCE.setQuestion("DO you enjoy crafting crates?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Enjoys crafting crates", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Enjoys crafting crates", "No"));
+        });
+
+end
+
+
+rule "RESULT: Enviromental Artist"
+	when
+		Fact(target == "Enjoys crafting crates", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Enviromental Artist");
+end
+
+
+rule "RESULT: 2d Artist"
+	when
+		Fact(target == "Enjoys crafting crates", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: 2d Artist");
+end
+
+
+rule "Wants to spend two weeks on two seconds"
+    when 
+        Fact(target == "Prefers to be a proper artist", state == "No")
+        not Fact(target == "Wants to spend two weeks on two seconds")
+    then
+        RuleSystem.INSTANCE.setQuestion("Want to spend two weeks on two seconds?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Wants to spend two weeks on two seconds", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Wants to spend two weeks on two seconds", "No"));
+        });
+
+end
+
+
+rule "RESULT: Animator"
+	when
+		Fact(target == "Wants to spend two weeks on two seconds", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Animator");
+end
+
+
+rule "RESULT: 3d Artist"
+	when
+		Fact(target == "Wants to spend two weeks on two seconds", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: 3d Artist");
+end
+
+
+rule "Likes working with unfinished tools"
+    when 
+        Fact(target == "Is visually oriented", state == "No")
+        not Fact(target == "Likes working with unfinished tools")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you like to work with unfinished tools?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Likes working with unfinished tools", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Likes working with unfinished tools", "No"));
+        });
+
+end
+
+
+rule "RESULT: Level Designer"
+	when
+		Fact(target == "Likes working with unfinished tools", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Level Designer");
+end
+
+
+rule "Speaks spreadsheet"
+    when 
+        Fact(target == "Likes working with unfinished tools", state == "No")
+        not Fact(target == "Speaks spreadsheet")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you speak Spreadsheet?");
+        
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Speaks spreadsheet", "No"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Speaks spreadsheet", "Yes"));
+        });
+
+end
+
+
+rule "RESULT: Writer"
+	when
+		Fact(target == "Speaks spreadsheet", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Writer");
+end
+
+
+rule "Wants to be told what to do"
+    when 
+        Fact(target == "Speaks spreadsheet", state == "Yes")
+        not Fact(target == "Wants to be told what to do")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you want to be told what to do?");
+        
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Wants to be told what to do", "No"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Wants to be told what to do", "Yes"));
+        });
+
+end
+
+
+rule "RESULT: Lead Game Designer"
+	when
+		Fact(target == "Wants to be told what to do", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Lead Game Designer");
+end
+
+
+rule "Obsesses excessively over details"
+    when 
+        Fact(target == "Wants to be told what to do", state == "Yes")
+        not Fact(target == "Obsesses excessively over details")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you obsess excessively over even the tiniest details?");
+        
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Obsesses excessively over details", "No"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Obsesses excessively over details", "Yes"));
+        });
+
+end
+
+
+rule "RESULT: Event Scripter"
+	when
+		Fact(target == "Obsesses excessively over details", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Event Scripter");
+end
+
+
+rule "Has fixation on gore and blood"
+    when 
+        Fact(target == "Obsesses excessively over details", state == "Yes")
+        not Fact(target == "Has fixation on gore and blood")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you have fixation on gore and blood?");
+        
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Has fixation on gore and blood", "No"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Has fixation on gore and blood", "Yes"));
+        });
+
+end
+
+
+rule "RESULT: Game Designer"
+	when
+		Fact(target == "Has fixation on gore and blood", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Game Designer");
+end
+
+
+rule "RESULT: Combat Designer"
+	when
+		Fact(target == "Has fixation on gore and blood", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Combat Designer");
+end
+
+
+rule "Likes to be alone"
+    when 
+        Fact(target == "Minds being underappreciated", state == "No")
+        not Fact(target == "Likes to be alone")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you like to be alone?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Likes to be alone", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Likes to be alone", "No"));
+        });
+
+end
+
+
+rule "Is musical"
+    when 
+        Fact(target == "Likes to be alone", state == "Yes")
+        not Fact(target == "Is musical")
+    then
+        RuleSystem.INSTANCE.setQuestion("Are you musical?");
+        
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is musical", "No"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is musical", "Yes"));
+        });
+
+end
+
+
+rule "RESULT: Office IT"
+	when
+		Fact(target == "Is musical", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Office IT");
+end
+
+
+rule "Likes to shoot or blow things up"
+    when 
+        Fact(target == "Is musical", state == "Yes")
+        not Fact(target == "Likes to shoot or blow things up")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you like to shoot or blow things up?");
+        
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Likes to shoot or blow things up", "No"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Likes to shoot or blow things up", "Yes"));
+        });
+
+end
+
+
+rule "RESULT: Composer"
+	when
+		Fact(target == "Likes to shoot or blow things up", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Composer");
+end
+
+
+rule "RESULT: Sound Designer"
+	when
+		Fact(target == "Likes to shoot or blow things up", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Sound Designer");
+end
+
+
+rule "Would rather be in the movies"
+    when 
+        Fact(target == "Likes to be alone", state == "No")
+        not Fact(target == "Would rather be in the movies")
+    then
+        RuleSystem.INSTANCE.setQuestion("Would you rather be in the movies?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Would rather be in the movies", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Would rather be in the movies", "No"));
+        });
+
+end
+
+
+rule "Minds errors in the given graph"
+    when 
+        Fact(target == "Would rather be in the movies", state == "No")
+        not Fact(target == "Minds errors in the given graph")
+    then
+        RuleSystem.INSTANCE.setQuestion("Did you mind the errors in this graph?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Minds errors in the given graph", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Minds errors in the given graph", "No"));
+        });
+
+end
+
+
+rule "RESULT: Quality Assurance"
+	when
+		Fact(target == "Minds errors in the given graph", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Quality Assurance");
+end
+
+
+rule "Wants to choose who to hang out with"
+    when 
+        Fact(target == "Minds errors in the given graph", state == "No")
+        not Fact(target == "Wants to choose who to hang out with")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you want to chose who to hang out with?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Wants to choose who to hang out with", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Wants to choose who to hang out with", "No"));
+        });
+
+end
+
+
+rule "RESULT: Guild Leader"
+	when
+		Fact(target == "Wants to choose who to hang out with", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Guild Leader");
+end
+
+
+rule "RESULT: Community Manager"
+	when
+		Fact(target == "Wants to choose who to hang out with", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Community Manager");
+end
+
+
+rule "Is a TV or movie celebrity"
+    when 
+        Fact(target == "Would rather be in the movies", state == "Yes")
+        not Fact(target == "Is a TV or movie celebrity")
+    then
+        RuleSystem.INSTANCE.setQuestion("You a TV or movie celebrity?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is a TV or movie celebrity", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is a TV or movie celebrity", "No"));
+        });
+
+end
+
+
+rule "RESULT: Voice Actor"
+	when
+		Fact(target == "Is a TV or movie celebrity", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Voice Actor");
+end
+
+
+rule "Is young, caucasian and hot"
+    when 
+        Fact(target == "Is a TV or movie celebrity", state == "No")
+        not Fact(target == "Is young, caucasian and hot")
+    then
+        RuleSystem.INSTANCE.setQuestion("Are you young, caucasian and hot ?");
+        
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is young, caucasian and hot", "No"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is young, caucasian and hot", "Yes"));
+        });
+
+end
+
+
+rule "RESULT: Motion Capture Actor"
+	when
+		Fact(target == "Is young, caucasian and hot", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Motion Capture Actor");
+end
+
+
+rule "Is male"
+    when 
+        Fact(target == "Is young, caucasian and hot", state == "Yes")
+        not Fact(target == "Is male")
+    then
+        RuleSystem.INSTANCE.setQuestion("Are you male?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is male", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Is male", "No"));
+        });
+
+end
+
+
+rule "RESULT: Military Shooter Packaging Model"
+	when
+		Fact(target == "Is male", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Military Shooter Packaging Model");
+end
+
+
+rule "Likes arts and crafts"
+    when 
+        Fact(target == "Is male", state == "No")
+        not Fact(target == "Likes arts and crafts")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you like arts and crafts?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Likes arts and crafts", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Likes arts and crafts", "No"));
+        });
+
+end
+
+
+rule "RESULT: Cosplayer"
+	when
+		Fact(target == "Likes arts and crafts", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Cosplayer");
+end
+
+
+rule "RESULT: Booth Babe"
+	when
+		Fact(target == "Likes arts and crafts", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Booth Babe");
+end
+
+
+rule "Likes doing productive work"
+    when 
+        Fact(target == "Loves money", state == "Yes")
+        not Fact(target == "Likes doing productive work")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you like doing productive work?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Likes doing productive work", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Likes doing productive work", "No"));
+        });
+
+end
+
+
+rule "Can code"
+    when 
+        Fact(target == "Likes doing productive work", state == "Yes")
+        not Fact(target == "Can code")
+    then
+        RuleSystem.INSTANCE.setQuestion("Can you code?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Can code", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Can code", "No"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("Well... it's been a while", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Can code", "Well... it's been a while"));
+        });
+
+end
+
+
+rule "RESULT: Programmer"
+	when
+		Fact(target == "Can code", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Programmer");
+end
+
+
+rule "RESULT: You're shit out of luck"
+	when
+		Fact(target == "Can code", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: You're shit out of luck");
+end
+
+
+rule "RESULT: Technical Lead"
+	when
+		Fact(target == "Can code", state == "Well... it's been a while")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Technical Lead");
+end
+
+
+rule "Afraid of responsibility"
+    when 
+        Fact(target == "Likes doing productive work", state == "No")
+        not Fact(target == "Afraid of responsibility")
+    then
+        RuleSystem.INSTANCE.setQuestion("Are you afraid of responsibility?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Afraid of responsibility", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Afraid of responsibility", "No"));
+        });
+
+end
+
+
+rule "RESULT: Consultant"
+	when
+		Fact(target == "Afraid of responsibility", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Consultant");
+end
+
+
+rule "Has grand vision"
+    when 
+        Fact(target == "Afraid of responsibility", state == "No")
+        not Fact(target == "Has grand vision")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you have a 'grand vision'?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Has grand vision", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Has grand vision", "No"));
+        });
+
+end
+
+
+rule "RESULT: Creative Director"
+	when
+		Fact(target == "Has grand vision", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Creative Director");
+end
+
+
+rule "Has any money"
+    when 
+        Fact(target == "Has grand vision", state == "No")
+        not Fact(target == "Has any money")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you have any money?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Has any money", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Has any money", "No"));
+        });
+
+end
+
+
+rule "RESULT: Producer"
+	when
+		Fact(target == "Has any money", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Producer");
+end
+
+
+rule "Has a conscience"
+    when 
+        Fact(target == "Has any money", state == "Yes")
+        not Fact(target == "Has a conscience")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you have a conscience?");
+        
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Has a conscience", "Yes"));
+        });
+
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+        	ksess.insert(new Fact("Has a conscience", "No"));
+        });
+
+end
+
+
+rule "RESULT: Studio Head"
+	when
+		Fact(target == "Has a conscience", state == "Yes")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Studio Head");
+end
+
+
+rule "RESULT: Social Games Studio Head"
+	when
+		Fact(target == "Has a conscience", state == "No")
+	then
+		RuleSystem.INSTANCE.setQuestion("RESULT: Social Games Studio Head");
+end
+
+
+/*
+rule "Has exceptional talent"
+    when
+        Fact(target == "Loves money", state == "No")
+        not Fact(target == "Has exceptional talent")
+    then
+        RuleSystem.INSTANCE.setQuestion("Do you have exceptional talent?");
+
+        RuleSystem.INSTANCE.addOption("Yes", (KieSession ksess) -> {
+                ksess.insert(new Fact("Has exceptional talent", "Yes"));
+        });
+
+        RuleSystem.INSTANCE.addOption("No", (KieSession ksess) -> {
+                ksess.insert(new Fact("Has exceptional talent", "No"));
+        });
+end
+
+rule "RESULT: Game Critic"
+        when
+                Fact(target == "Has exceptional talent", state == "Yes")
+        then
+                RuleSystem.INSTANCE.setQuestion("RESULT: Game Critic");
+end
+
 
 rule "Loves productive work"
 	
@@ -86,15 +1176,6 @@ rule "Can code"
 		
 end
 
-rule "RESULT: Game critic"
-
-	when
-		Fact(target == "Loves money", state == "No")
-		
-	then
-		RuleSystem.INSTANCE.setQuestion("RESULT: Game Critic");
-
-end
 
 rule "RESULT: Consultant"
 
@@ -145,5 +1226,5 @@ rule "RESULT: Shit out of luck"
 		RuleSystem.INSTANCE.setQuestion("RESULT: You're shit out of luck");
 
 end
-
+*/
 

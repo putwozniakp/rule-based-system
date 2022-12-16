@@ -1,0 +1,196 @@
+---- RESULT: Gamer wymaga scalenia ręcznego jako jedyny terminal point ma 2 drogi
+---- 
+Has exceptional talent : Do you have exceptional talent?
+Loves money : No
+Yes
+No
+---- 
+Bitter for not having talent : Are you bitter about it?
+Has exceptional talent : No
+Yes + Game Critic
+No + Game Reviewer
+----
+Gets excited for other people ideas : Can you get excited for other peoples' ideas? 
+Has exceptional talent : Yes
+Yes
+No
+Nah, but i can fake it + Marketer
+----
+Really gets excited for other people ideas : Really?
+Gets excited for other people ideas : Yes
+Yes
+No
+----
+Thinks games are important : Do you think games are important?
+Gets excited for other people ideas : No 
+Really gets excited for other people ideas : No
+Yes
+No + Social Games Studio Employee
+----
+Can make games on its own : Can you make games on your own?
+Thinks games are important : Yes
+Yes + Indie Developer
+No
+----
+Knows basic grammar : Do you know basic grammar?
+Can make games on its own : No
+Yes + Blogger
+No
+----
+At least good at playing games : Are you at least good at playing games?
+Knows basic grammar : No
+No + Gamer
+Yes
+----
+Is from Asia : Are you from Asia?
+At least good at playing games : Yes
+Yes, China + Gold Farmer
+Yes, Korea + Starcraft Cyberathlete
+No + Gamer
+----
+Minds being underappreciated : Do you mind being underappreciated? 
+Really gets excited for other people ideas : Yes
+Yes
+No
+----
+Is visually oriented : Are you visually oriented?
+Minds being underappreciated : Yes 
+Yes
+No
+----
+Prefers working over talking : Do you prefer working over talking?
+Is visually oriented : Yes 
+Yes
+No + Art Director
+----
+Prefers to be a proper artist : Would you rather be a 'proper' artist?
+Prefers working over talking : Yes
+Yes
+No
+----
+Is French : Are you French?
+Prefers to be a proper artist : Yes
+Yes + Comic Artist
+No
+----
+Is Asian : Asian?
+Is French : No
+Yes + Concept Artist
+No
+----
+Enjoys crafting crates : DO you enjoy crafting crates?
+Is Asian : No 
+Yes + Enviromental Artist
+No + 2d Artist
+----
+Wants to spend two weeks on two seconds : Want to spend two weeks on two seconds? 
+Prefers to be a proper artist : No
+Yes + Animator
+No + 3d Artist
+----
+Likes working with unfinished tools : Do you like to work with unfinished tools?
+Is visually oriented : No 
+Yes + Level Designer
+No
+----
+Speaks spreadsheet : Do you speak Spreadsheet?
+Likes working with unfinished tools : No
+No + Writer
+Yes 
+----
+Wants to be told what to do : Do you want to be told what to do?
+Speaks spreadsheet : Yes
+No + Lead Game Designer
+Yes
+----
+Obsesses excessively over details : Do you obsess excessively over even the tiniest details?
+Wants to be told what to do : Yes
+No + Event Scripter
+Yes
+----
+Has fixation on gore and blood : Do you have fixation on gore and blood?
+Obsesses excessively over details : Yes
+No + Game Designer
+Yes + Combat Designer
+----
+Likes to be alone : Do you like to be alone?
+Minds being underappreciated : No
+Yes
+No
+----
+Is musical : Are you musical?
+Likes to be alone : Yes 
+No + Office IT
+Yes
+----
+Likes to shoot or blow things up : Do you like to shoot or blow things up?
+Is musical : Yes
+No + Composer
+Yes + Sound Designer
+----
+Would rather be in the movies : Would you rather be in the movies?
+Likes to be alone : No
+Yes
+No
+----
+Minds errors in the given graph : Did you mind the errors in this graph?
+Would rather be in the movies : No
+Yes + Quality Assurance
+No
+----
+Wants to choose who to hang out with : Do you want to chose who to hang out with?
+Minds errors in the given graph : No
+Yes + Guild Leader
+No + Community Manager
+----
+Is a TV or movie celebrity : You a TV or movie celebrity?
+Would rather be in the movies : Yes
+Yes + Voice Actor
+No
+----
+Is young, caucasian and hot : Are you young, caucasian and hot ?
+Is a TV or movie celebrity : No
+No + Motion Capture Actor
+Yes
+----
+Is male : Are you male?
+Is young, caucasian and hot : Yes
+Yes + Military Shooter Packaging Model
+No
+----
+Likes arts and crafts : Do you like arts and crafts?
+Is male : No
+Yes + Cosplayer
+No + Booth Babe
+----
+Likes doing productive work : Do you like doing productive work?
+Loves money : Yes
+Yes
+No
+---
+Can code : Can you code?
+Likes doing productive work : Yes
+Yes + Programmer
+No + You're shit out of luck
+Well... it's been a while + Technical Lead
+---
+Afraid of responsibility : Are you afraid of responsibility?
+Likes doing productive work : No
+Yes + Consultant
+No
+----
+Has grand vision : Do you have a 'grand vision'?
+Afraid of responsibility : No
+Yes + Creative Director
+No
+---
+Has any money : Do you have any money?
+Has grand vision : No
+Yes
+No + Producer
+---
+Has a conscience : Do you have a conscience?
+Has any money : Yes
+Yes + Studio Head
+No + Social Games Studio Head
+---
